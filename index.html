@@ -129,7 +129,7 @@
             space-y: 0.5rem;
         }
 
-        /* YENİ: Fotoğraf Alanları (4:3 Oranında) */
+        /* Fotoğraf Alanları (4:3 Oranında) */
         .topic-image-container {
             width: 100%;
             aspect-ratio: 4 / 3; /* <<< 4:3 ORAN */
@@ -148,6 +148,8 @@
             font-size: 1.125rem;
             text-align: center;
             padding: 1rem;
+            /* Resmin container'dan taşmamasını sağlar */
+            overflow: hidden; 
         }
 
 
@@ -216,14 +218,14 @@
 
             <div id="anasayfa" class="tab-content space-y-4">
                 <h2 class="section-header">
-                    <img xmlns="foto1.jpg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </img>
+                    </svg>
                     Proje Konusuna Giriş
                 </h2>
                 
                 <div class="topic-image-container w-full max-w-3xl mx-auto mb-8">
-                    <span></span>
+                    <img src="foto1.jpg" alt="Sağlıklı Yaşam" class="w-full h-full object-cover rounded-xl">
                 </div>
 
                 <p class="text-lg text-slate-700">Hoş geldiniz! Bu sunum, Sağlık Bilgisi ders kitabı 47-63. sayfalar arasındaki konuları kapsamaktadır. Amacımız, sağlıklı bir yaşam için temel taşlar olan 'Beslenme ve Fiziksel Aktivite' ile 'Zihinsel, Duygusal ve Sosyal Sağlık' konularını incelemektir.</p>
@@ -247,17 +249,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.539.166l-.18.1c-.562.31-.916.9-1.036 1.545l-.04.225c-.04.239-.184.441-.357.59l-.652.508a2.25 2.25 0 01-1.447.886l-.143.048c-.608.204-1.128.568-1.545 1.036l-.1.18a1.107 1.107 0 00-.166.539l-.048.143a2.25 2.25 0 01-.886 1.161l-.766.51c-.48.319-1.121.226-1.49-.216l-.89-1.068a1.125 1.125 0 00-.864-.405v-.568c0-.334-.148-.65-.405-.864l-1.068-.89c-.442.369-.535-1.01-.216-1.49l.51-.766a2.25 2.25 0 011.161-.886l.143-.048a1.107 1.107 0 00.539-.166l.18-.1c.562-.31.916.9 1.036-1.545l.04-.225c.04-.239.184.441.357.59l.652-.508a2.25 2.25 0 011.447.886l.143-.048c.608.204 1.128.568 1.545 1.036l.1-.18a1.107 1.107 0 00.166.539l.048.143a2.25 2.25 0 01.886-1.161l.766-.51c.48-.319 1.121.226 1.49.216l.89 1.068c.257.214.405.53.405.864z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.344v.001M12 17.656v.001" />
                     </svg>
-                    1.3.1. Fiziksel Aktivitelerin Sağlığa Etkileri
+                    Fiziksel Aktivitelerin Sağlığa Etkileri
                 </h2>
 
                 <div class="grid lg:grid-cols-2 gap-10 items-start">
                     
                     <div class="image-column space-y-8">
                         <div class="topic-image-container">
-                            <span></span>
-                        </div>
-                        <div class="topic-image-container">
-                            <span></span>
+                            <img src="kosan.JPG" alt="Fiziksel Aktivite" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
                     
@@ -332,17 +331,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12.041v-.15a1.875 1.875 0 00-1.254-1.739l-6.5-3.04a1.875 1.875 0 00-2.013.001l-6.5 3.04a1.875 1.875 0 00-1.254 1.74v.149m17.5 0a1.875 1.875 0 01-1.254 1.738l-6.5 3.04a1.875 1.875 0 01-2.013 0l-6.5-3.04a1.875 1.875 0 01-1.254-1.738m17.5 0v.149c0 .964-.613 1.8-1.5 2.15l-5.385 2.522a1.875 1.875 0 01-2.13 0l-5.385-2.522C3.113 14.001 2.5 13.114 2.5 12.19V12m17.5 0a1.875 1.875 0 00-1.254-1.739l-6.5-3.04a1.875 1.875 0 00-2.013.001l-6.5 3.04a1.875 1.875 0 00-1.254 1.74v.149" />
                     </svg>
-                    1.3.2. Yeterli ve Dengeli Beslenmenin Önemi
+                    Yeterli ve Dengeli Beslenmenin Önemi
                 </h2>
 
                 <div class="grid lg:grid-cols-2 gap-10 items-start">
                     
                     <div class="image-column lg:order-last space-y-8">
                         <div class="topic-image-container">
-                            <span></span>
-                        </div>
-                         <div class="topic-image-container">
-                            <span></span>
+                             <img src="saglikliyemek.JPG" alt="Sağlıklı Beslenme" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
@@ -381,17 +377,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12A2.25 2.25 0 0020.25 14.25V3M3.75 21h16.5M16.5 3.75h.008v.008H16.5V3.75z" />
                     </svg>
-                    1.3.3. Obezite: Nedenleri ve Sağlığa Etkileri
+                    Obezite: Nedenleri ve Sağlığa Etkileri
                 </h2>
                 
                 <div class="grid lg:grid-cols-2 gap-10 items-start">
                     
                     <div class="image-column space-y-8">
                         <div class="topic-image-container">
-                            <span></span>
-                        </div>
-                        <div class="topic-image-container">
-                            <span></span>
+                            <img src="obezite.JPG" alt="Obezite ve Riskleri" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
                     
@@ -466,17 +459,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    1.4. ZİHİNSEL, DUYGUSAL VE SOSYAL SAĞLIK
+                    Zihinsel, Duygusal ve Sosyal Sağlık
                 </h2>
                 
                 <div class="grid lg:grid-cols-2 gap-10 items-start">
                     
                     <div class="image-column lg:order-last space-y-8">
                         <div class="topic-image-container">
-                            <span></span>
-                        </div>
-                        <div class="topic-image-container">
-                             <span></span>
+                            <img src="spor.JPG" alt="Ruh Sağlığı ve Spor" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
