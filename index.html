@@ -74,14 +74,12 @@
             border: 1px solid #e5e7eb; /* border-gray-200 */
             border-radius: 0.75rem; /* rounded-xl */
             padding: 1.5rem;
-            /* shadow-lg */
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
             height: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .concept-card:hover {
             transform: translateY(-4px);
-            /* shadow-xl */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
         }
         .concept-card h3 {
@@ -148,8 +146,14 @@
             font-size: 1.125rem;
             text-align: center;
             padding: 1rem;
-            /* Resmin container'dan taşmamasını sağlar */
-            overflow: hidden; 
+            overflow: hidden; /* Resmin taşmasını engeller */
+        }
+        
+        .topic-image-container img {
+             width: 100%;
+             height: 100%;
+             object-fit: cover; /* Resmi 4:3 alana sığdırır, kırpar */
+             border-radius: 0.75rem; /* rounded-xl */
         }
 
 
@@ -252,33 +256,32 @@
                     Fiziksel Aktivitelerin Sağlığa Etkileri
                 </h2>
 
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <div class="grid lg:grid-cols-4 gap-8 items-start">
                     
-                    <div class="image-column space-y-8">
+                    <div class="image-column lg:col-span-1">
                         <div class="topic-image-container">
                             <img src="kosan.JPG" alt="Fiziksel Aktivite" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
                     
-                    <div class="text-column space-y-6">
+                    <div class="text-column space-y-6 lg:col-span-2">
                         <p class="text-lg text-slate-700">Fiziksel aktivite, iskelet kasları kullanılarak yapılan ve enerji harcamayı gerektiren her harekettir. Egzersiz ise planlı, tekrarlı ve fiziksel uygunluğu geliştirmeyi amaçlayan aktivitelerdir.</p>
                         
                         <h3 class="text-2xl font-semibold text-slate-800">Aktivitenin Sağlığa Faydaları:</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-green-800">Bedensel Sağlık</h4>
-                                <ul class="list-disc list-inside text-green-700 mt-3 space-y-1.5">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4 shadow-sm">
+                                <h4 class="font-bold text-lg text-green-800">Bedensel Sağlık</h4>
+                                <ul class="list-disc list-inside text-green-700 mt-2 space-y-1">
                                     <li>Kas ve kemik kütlesini korur</li>
                                     <li>Kalbi güçlendirir</li>
-                                    <li>Kan basıncını (tansiyonu) düzenler</li>
+                                    <li>Tansiyonu düzenler</li>
                                     <li>Akciğer kapasitesini artırır</li>
-                                    <li>Kilo alımını önler</li>
-                                    <li>Kemik erimesini (Osteoporoz) önler</li>
+                                    <li>Kemik erimesini önler</li>
                                 </ul>
                             </div>
-                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-blue-800">Zihinsel ve Sosyal Sağlık</h4>
-                                <ul class="list-disc list-inside text-blue-700 mt-3 space-y-1.5">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm">
+                                <h4 class="font-bold text-lg text-blue-800">Zihinsel ve Sosyal Sağlık</h4>
+                                <ul class="list-disc list-inside text-blue-700 mt-2 space-y-1">
                                     <li>İyi hissetmeyi sağlar</li>
                                     <li>Depresyon ve kaygıyı azaltır</li>
                                     <li>Öz güveni artırır</li>
@@ -324,6 +327,13 @@
                             <li><span class="font-semibold">Vitamin Hapları (Aşırı):</span> Böbrek yetmezliği ve karaciğer hastalıklarına sebep olabilir.</li>
                         </ul>
                     </div>
+                    
+                    <div class="image-column lg:col-span-1">
+                        <div class="topic-image-container">
+                            <img src="yaslar.jpg" alt="Her Yaşta Spor" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                    </div>
+                    
                 </div> </div>
 
             <div id="beslenme" class="tab-content space-y-4">
@@ -334,15 +344,15 @@
                     Yeterli ve Dengeli Beslenmenin Önemi
                 </h2>
 
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <div class="grid lg:grid-cols-4 gap-8 items-start">
                     
-                    <div class="image-column lg:order-last space-y-8">
+                    <div class="image-column lg:col-span-1">
                         <div class="topic-image-container">
-                             <img src="saglikliyemek.JPG" alt="Sağlıklı Beslenme" class="w-full h-full object-cover rounded-xl">
+                            <img src="saglikliyemek.JPG" alt="Sağlıklı Beslenme" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
-                    <div class="text-column space-y-6">
+                    <div class="text-column space-y-6 lg:col-span-2">
                         <p class="text-lg text-slate-700">Beslenme, sadece açlığı bastırmak değil; sağlığı korumak, geliştirmek ve yaşam kalitesini yükseltmek için vücudun ihtiyacı olan besin ögelerini (protein, karbonhidrat, yağ, vitamin, mineral) yeterli miktarda ve uygun zamanda almaktır.</p>
 
                         <h3 class="text-2xl font-semibold text-slate-800">Kahvaltının Önemi</h3>
@@ -370,6 +380,12 @@
                             <li><span class="font-semibold">Aşırı Yağ (Özellikle Trans Yağ):</span> Kötü kolesterolü yükseltir, damar tıkanıklığı, felç ve kalp krizi riskini artırır.</li>
                         </ul>
                     </div>
+
+                    <div class="image-column lg:col-span-1">
+                        <div class="topic-image-container">
+                             <span></span>
+                        </div>
+                    </div>
                 </div> </div>
 
             <div id="obezite" class="tab-content space-y-6">
@@ -380,15 +396,15 @@
                     Obezite: Nedenleri ve Sağlığa Etkileri
                 </h2>
                 
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <div class="grid lg:grid-cols-4 gap-8 items-start">
                     
-                    <div class="image-column space-y-8">
+                    <div class="image-column lg:col-span-1">
                         <div class="topic-image-container">
                             <img src="obezite.JPG" alt="Obezite ve Riskleri" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
                     
-                    <div class="text-column space-y-6">
+                    <div class="text-column space-y-6 lg:col-span-2">
                         <div class="concept-card">
                             <h3>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -452,6 +468,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="image-column lg:col-span-1">
+                        <div class="topic-image-container">
+                             <span></span>
+                        </div>
+                    </div>
                 </div> </div>
 
             <div id="ruhsal" class="tab-content space-y-4">
@@ -462,15 +484,15 @@
                     Zihinsel, Duygusal ve Sosyal Sağlık
                 </h2>
                 
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <div class="grid lg:grid-cols-4 gap-8 items-start">
                     
-                    <div class="image-column lg:order-last space-y-8">
+                    <div class="image-column lg:col-span-1">
                         <div class="topic-image-container">
-                            <img src="spor.JPG" alt="Ruh Sağlığı ve Spor" class="w-full h-full object-cover rounded-xl">
+                             <img src="spor.JPG" alt="Ruh Sağlığı ve Spor" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
 
-                    <div class="text-column space-y-6">
+                    <div class="text-column space-y-6 lg:col-span-2">
                         <p class="text-lg text-slate-700">DSÖ'ye göre zihinsel sağlık; bireyin yeteneklerinin farkında olduğu, günlük yaşamdaki stresle başa çıkabildiği ve yaşadığı topluma katkıda bulunabildiği iyi olma hâlidir.</p>
 
                         <h3 class="text-2xl font-semibold text-slate-800">Stresle Arkadaş Olmak</h3>
@@ -506,7 +528,12 @@
                                 </ul>
                             </div>
                         </div>
-                    </div> </div> </div>
+                    </div> <div class="image-column lg:col-span-1">
+                        <div class="topic-image-container">
+                             <span></span>
+                        </div>
+                    </div>
+                </div> </div>
 
             <div id="quiz" class="tab-content">
                 <h2 class="section-header">
