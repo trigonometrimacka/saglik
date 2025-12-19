@@ -3,928 +3,554 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sağlık Bilgisi Sunumu: Beslenme, Aktivite ve Ruh Sağlığı</title>
+    <title>Sağlık Bilgisi Kapsamlı Sunumu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Temel Ayarlar --- */
+        /* --- GENEL TASARIM --- */
+        :root {
+            --primary: #4f46e5;
+            --secondary: #1e1b4b;
+            --accent: #10b981;
+            --bg: #f1f5f9;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: #1e293b;
+            scroll-behavior: smooth;
         }
 
-        /* --- Animasyonlar --- */
+        /* --- ANİMASYONLAR --- */
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Yanıp Sönme Animasyonu (Süre Bitti İçin) */
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
-        .blink-alert {
-            color: #dc2626 !important; /* Kırmızı ve zorunlu */
-            font-weight: 800;
-            animation: blinker 1s linear infinite;
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-out;
-        }
-        #anasayfa {
-            display: block;
-        }
-
-        /* --- Navigasyon Butonları --- */
-        .tab-button {
-            padding: 0.65rem 1.25rem;
-            font-weight: 600;
-            color: #475569;
-            border-radius: 0.5rem;
-            margin: 0.25rem 0.5rem;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .tab-button:hover {
-            color: #4f46e5;
-            background-color: #eef2ff;
-        }
-        .tab-button.active {
-            color: #ffffff;
-            background-color: #4f46e5;
-            border-color: #4f46e5;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
-        }
-
-        /* --- Başlıklar ve Kartlar --- */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.875rem;
-            font-weight: 800;
-            color: #1e3a8a;
-            border-bottom: 2px solid #dbeafe;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-header svg {
-            width: 2rem;
-            height: 2rem;
-            color: #3b82f6;
-        }
-
-        .concept-card {
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07);
-            height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .concept-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
-        }
-        .concept-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #4338ca;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* --- Yaş Grupları Kartları --- */
-        .age-sport-card {
-            background-color: #fdfdfd;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.75rem;
-            padding: 1rem 1.25rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.2s ease-out;
-            margin-bottom: 1rem;
-        }
-        .age-sport-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-        .age-sport-card h4 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: #4f46e5;
-            border-bottom: 1px solid #ddd6fe;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-        .age-sport-card ul {
-            list-style-type: disc;
-            list-style-position: inside;
-            color: #374151;
-            font-size: 0.95rem;
-            space-y: 0.5rem;
-        }
-
-        /* --- Görsel Alanları --- */
-        .topic-image-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #e5e7eb; 
-            border-radius: 0.75rem; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
-            border: 1px solid #d1d5db;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
+        /* --- NAVİGASYON --- */
+        .nav-link {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after { width: 80%; }
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+        }
 
-        .topic-image-container img {
+        /* --- KARTLAR VE GÖRSELLER --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .topic-img {
             width: 100%;
-            height: 100%;
+            height: 400px;
             object-fit: cover;
-            display: block;
+            border-radius: 1rem;
+            transition: transform 0.5s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        
-        /* Görsel yoksa placeholder metni */
-        .topic-image-container span:empty::before {
-            content: 'Görsel Alanı';
-            color: #9ca3af;
-            font-style: italic;
-        }
+        .topic-img:hover { transform: scale(1.02); }
 
-        /* --- Quiz Stilleri --- */
-        .quiz-option {
-            display: block;
-            padding: 0.85rem 1.25rem;
-            border: 1px solid #e5e7eb;
-            background-color: #ffffff;
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            font-weight: 500;
-        }
-        .quiz-option:hover {
-            background-color: #f9fafb;
-            border-color: #a5b4fc;
-        }
-        .quiz-option input {
-            display: none;
-        }
-        .quiz-option.selected {
-            background-color: #eef2ff;
-            border-color: #4f46e5;
-            color: #3730a3;
-            font-weight: 600;
-            border-width: 2px;
-        }
-        .quiz-option.correct {
-            background-color: #dcfce7;
-            border-color: #22c55e;
-            color: #15803d;
-        }
-        .quiz-option.incorrect {
-            background-color: #fee2e2;
-            border-color: #ef4444;
-            color: #b91c1c;
-        }
-        
-        /* Timer Stili */
-        #timer-display {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4338ca;
-            background-color: #e0e7ff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-            border: 2px solid #c7d2fe;
-            min-width: 140px;
+        .image-caption {
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
             text-align: center;
         }
 
-        /* Input Oklarını Kaldırma */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; }
+        /* --- QUIZ ÖZELLEŞTİRME --- */
+        .quiz-choice {
+            transition: all 0.2s;
+            border: 2px solid #e2e8f0;
+        }
+        .quiz-choice:hover { border-color: var(--primary); background: #f8fafc; }
+        .quiz-choice.selected { background: #eef2ff; border-color: var(--primary); }
+        .quiz-choice.correct { background: #dcfce7; border-color: #22c55e; }
+        .quiz-choice.wrong { background: #fee2e2; border-color: #ef4444; }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* --- TABLO TASARIMI --- */
+        .me-table th { background-color: #4f46e5; color: white; padding: 12px; }
+        .me-table td { border: 1px solid #e2e8f0; padding: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 p-4 md:p-8">
+<body class="antialiased">
 
-    <div class="max-w-7xl mx-auto">
-        <header class="bg-gradient-to-r from-indigo-700 to-blue-600 shadow-xl rounded-lg p-10 mb-6 text-center">
-            <h1 class="text-4xl font-extrabold text-white tracking-tight" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Sağlık Bilgisi Sunumu</h1>
-            <p class="text-xl text-indigo-100 mt-2">Beslenme, Fiziksel Aktivite ve Ruh Sağlığı</p>
-        </header>
-
-        <nav class="flex flex-wrap justify-center p-2 md:p-4 bg-white rounded-t-lg shadow-md z-10 relative border-b border-gray-300">
-            <button class="tab-button active" onclick="openTab('anasayfa')">Ana Sayfa</button>
-            <button class="tab-button" onclick="openTab('fiziksel')">Fiziksel Aktivite</button>
-            <button class="tab-button" onclick="openTab('beslenme')">Beslenme</button>
-            <button class="tab-button" onclick="openTab('obezite')">Obezite</button>
-            <button class="tab-button" onclick="openTab('ruhsal')">Ruh Sağlığı</button>
-            <button class="tab-button" onclick="openTab('quiz')">Quiz</button>
-        </nav>
-
-        <main class="bg-white shadow-xl rounded-b-lg rounded-tr-lg p-10 md:p-14 min-h-[400px]">
-
-            <div id="anasayfa" class="tab-content space-y-4">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-                    Proje Konusuna Giriş
-                </h2>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="topic-image-container">
-                        <img src="saglikliyemek.JPG" alt="Giriş Görseli 1">
-                    </div>
-                  
+    <header class="sticky top-0 z-50 bg-indigo-700 text-white shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                 </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">SAĞLIK BİLGİSİ <span class="text-indigo-200">2024</span></h1>
+            </div>
+            <nav class="hidden md:flex gap-1">
+                <button onclick="switchTab('home')" class="nav-link px-4 py-2 active" id="btn-home">Giriş</button>
+                <button onclick="switchTab('phys')" class="nav-link px-4 py-2" id="btn-phys">Aktivite</button>
+                <button onclick="switchTab('nutri')" class="nav-link px-4 py-2" id="btn-nutri">Beslenme</button>
+                <button onclick="switchTab('obese')" class="nav-link px-4 py-2" id="btn-obese">Obezite</button>
+                <button onclick="switchTab('mental')" class="nav-link px-4 py-2" id="btn-mental">Ruh Sağlığı</button>
+                <button onclick="switchTab('quiz')" class="nav-link px-4 py-2" id="btn-quiz">Quiz</button>
+            </nav>
+        </div>
+    </header>
 
-                <p class="text-lg text-slate-700">Hoş geldiniz! Bu sunum, Sağlık Bilgisi ders kitabı 47-63. sayfalar arasındaki konuları kapsamaktadır. Amacımız, sağlıklı bir yaşam için temel taşlar olan 'Beslenme ve Fiziksel Aktivite' ile 'Zihinsel, Duygusal ve Sosyal Sağlık' konularını incelemektir.</p>
-                <p class="text-lg text-slate-700">Bu bölümde, bu iki ana konunun birbiriyle nasıl ilişkili olduğunu ve genel sağlığımızı nasıl etkilediğini keşfedeceğiz. Yukarıdaki sekmeleri kullanarak konular arasında gezinebilirsiniz.</p>
+    <main class="max-w-7xl mx-auto px-4 py-12">
+
+        <section id="tab-home" class="tab-content fade-in space-y-12">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-5xl font-extrabold text-slate-900 leading-tight">Sağlıklı Yaşam Bir <span class="text-indigo-600">Tercihtir.</span></h2>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Dünya Sağlık Örgütü (DSÖ) sağlığı; "Sadece hastalık ve sakatlığın olmayışı değil, bedensel, ruhsal ve sosyal yönden tam bir iyilik hâli" olarak tanımlar. Bu sunumda ders kitabımızın 47. ve 63. sayfaları arasındaki tüm temel kazanımları görsellerle desteklenmiş bir şekilde inceleyeceğiz.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 flex-1">
+                            <span class="block text-3xl font-bold text-indigo-600">10-12</span>
+                            <span class="text-sm text-slate-500">Saatlik Gece Açlığı</span>
+                        </div>
+                        <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 flex-1">
+                            <span class="block text-3xl font-bold text-emerald-600">1 ME</span>
+                            <span class="text-sm text-slate-500">Dinlenme Enerjisi</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="saglikliyemek.JPG" class="topic-img" alt="Giriş Görseli">
+                    <p class="image-caption">Sağlıklı tabak modeli ile dengeli beslenme (Sunum Görseli 1)</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-indigo-500">
+                    <img src="foto1.jpg" class="w-full h-48 object-cover rounded-xl mb-4" alt="Yaşam">
+                    <h3 class="text-xl font-bold mb-2">Fiziksel Aktivite</h3>
+                    <p class="text-slate-600">Enerji dengesini sağlamak ve kas iskelet yapısını korumak için hareket şarttır.</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-emerald-500">
+                    <img src="yaslar.jpg" class="w-full h-48 object-cover rounded-xl mb-4" alt="Beslenme">
+                    <h3 class="text-xl font-bold mb-2">Yaş Grupları</h3>
+                    <p class="text-slate-600">Her yaş dönemi farklı fiziksel ve zihinsel ihtiyaçları beraberinde getirir.</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-amber-500">
+                    <img src="spor.JPG" class="w-full h-48 object-cover rounded-xl mb-4" alt="Spor">
+                    <h3 class="text-xl font-bold mb-2">Zindelik</h3>
+                    <p class="text-slate-600">Egzersiz sadece vücudu değil, zihni de berraklaştırır ve disiplin katar.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-phys" class="tab-content hidden fade-in space-y-12">
+            <h2 class="text-4xl font-bold text-slate-900 border-l-8 border-indigo-600 pl-4">1.3.1. Fiziksel Aktivitelerin Sağlığa Etkileri</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <p class="text-lg">İskelet kasları kullanılarak yapılan ve enerji harcamayı gerektiren her türlü bedensel harekete <strong>fiziksel aktivite</strong> denir. Egzersiz ise fiziksel uygunluğun (kondisyon) geliştirilmesini amaçlayan planlı, yapılandırılmış ve tekrarlı fiziksel aktivitelerdir.</p>
+                    
+                    <div class="p-6 bg-indigo-50 rounded-2xl">
+                        <h4 class="text-xl font-bold text-indigo-900 mb-4">Aktivitenin Temel Faydaları:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2">✅ Kalp ve damar sağlığını korur.</li>
+                            <li class="flex items-center gap-2">✅ Tip 2 diyabet riskini azaltır.</li>
+                            <li class="flex items-center gap-2">✅ Kemik yoğunluğunu artırarak osteoporozu önler.</li>
+                            <li class="flex items-center gap-2">✅ Depresyon ve kaygı düzeyini düşürür.</li>
+                        </ul>
+                    </div>
+
+                    <img src="IMG_0122.jpeg" class="topic-img" alt="ME Tablosu">
+                    <p class="image-caption">Ders Kitabı Sayfa 49: Fiziksel Aktivite ve ME Değerleri Tablosu</p>
+                </div>
                 
-                <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-5 mt-6">
-                    <h3 class="font-bold text-blue-800 text-xl">Sunum Akışı:</h3>
-                    <ul class="list-disc list-inside text-blue-700 mt-2 space-y-2 text-lg">
-                        <li><b>Fiziksel Aktivite:</b> Sağlığa etkileri, ME kavramı, yaşa göre sporlar ve tehlikeli takviyeler.</li>
-                        <li><b>Beslenme:</b> Yeterli/dengeli beslenme, kahvaltının önemi ve "Sağlıklı Yemek Tabağı".</li>
-                        <li><b>Obezite:</b> Nedenleri, BKİ hesaplama, yol açtığı sorunlar ve tehlikeli çözümler.</li>
-                        <li><b>Ruh Sağlığı:</b> Ergenler için önemi ve stresle başa çıkma.</li>
-                        <li>Tüm bu konulardan oluşan kısa bir quiz.</li>
+                <div class="space-y-6">
+                    <img src="kosan.JPG" class="topic-img" alt="Koşu">
+                    
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h4 class="font-bold text-xl mb-3">Metabolik Eş Değer (ME) Kavramı</h4>
+                        <p class="text-slate-600">Vücudun fiziksel aktivite sırasında tükettiği oksijen miktarını ölçen bir birimdir. 1 ME, kişinin dinlenme anında harcadığı oksijen miktarıdır. Örneğin, 7 ME olan bir koşu aktivitesi, dinlenme anına göre 7 kat daha fazla enerji harcandığını gösterir.</p>
+                    </div>
+
+                    <div class="p-6 bg-red-50 border border-red-200 rounded-2xl">
+                        <h4 class="font-bold text-red-700 text-lg">⚠️ Tehlikeli Takviyeler!</h4>
+                        <p class="text-red-800 text-sm mt-2">Ders kitabımızda da belirtildiği üzere; protein tozları, enerji içecekleri ve yüksek dozda vitamin haplarının bilinçsiz kullanımı kalp ritm bozukluklarına, böbrek taşı oluşumuna ve karaciğer hasarına yol açabilir. En güvenli kaynak doğal besinlerdir.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-nutri" class="tab-content hidden fade-in space-y-12">
+            <h2 class="text-4xl font-bold text-slate-900 border-l-8 border-emerald-500 pl-4">1.3.2. Yeterli ve Dengeli Beslenmenin Önemi</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <img src="IMG_0123.jpeg" class="topic-img" alt="Kahvaltı">
+                    <h3 class="text-2xl font-bold text-slate-800">Kahvaltının Beyin Sağlığına Etkisi</h3>
+                    <p class="text-slate-600">Gece boyunca yaklaşık 10-12 saat süren bir açlıktan sonra vücudumuz ve beynimiz enerjiye ihtiyaç duyar. Beynin tek enerji kaynağı <strong>glikozdur</strong>. Kahvaltı yapmayan çocuklarda; halsizlik, dikkat dağınıklığı, baş dönmesi ve bilişsel performansta düşüş görülür.</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <img src="IMG_0124.png" class="topic-img" alt="Tabak Modeli">
+                    <p class="image-caption">Sağlıklı Yemek Tabağı Modeli (Sayfa 54)</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 border-2 border-emerald-100 rounded-xl bg-emerald-50">
+                            <h4 class="font-bold text-emerald-800">Tabağın Yarısı</h4>
+                            <p class="text-sm">Sebze ve meyvelerle dolu olmalı.</p>
+                        </div>
+                        <div class="p-4 border-2 border-amber-100 rounded-xl bg-amber-50">
+                            <h4 class="font-bold text-amber-800">Tabağın Çeyreği</h4>
+                            <p class="text-sm">Tam tahıl ürünleri (çavdar, tam buğday).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card p-8 rounded-3xl">
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-9 6c0 5 9 10 9 10s9-5 9-10a6 6 0 00-9-6z"></path></svg>
+                        3 Beyaz Tehlikesi
+                    </h4>
+                    <ul class="space-y-4">
+                        <li><strong>Aşırı Şeker:</strong> Diyabet ve obezitenin ana nedenidir.</li>
+                        <li><strong>Aşırı Tuz:</strong> Yüksek tansiyon ve böbrek hastalıklarına yol açar.</li>
+                        <li><strong>Aşırı Yağ:</strong> Özellikle trans yağlar damar tıkanıklığı ve kalp krizine sebep olur.</li>
                     </ul>
                 </div>
-            </div>
-
-            <div id="fiziksel" class="tab-content space-y-4">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.539.166l-.18.1c-.562.31-.916.9-1.036 1.545l-.04.225c-.04.239-.184.441-.357.59l-.652.508a2.25 2.25 0 01-1.447.886l-.143.048c-.608.204-1.128.568-1.545 1.036l-.1.18a1.107 1.107 0 00-.166.539l-.048.143a2.25 2.25 0 01.886-1.161l.766-.51c-.48.319-1.121.226-1.49-.216l-.89-1.068a1.125 1.125 0 00-.864-.405v-.568c0-.334-.148-.65-.405-.864l-1.068-.89c-.442.369-.535-1.01-.216-1.49l.51-.766a2.25 2.25 0 011.161-.886l.143-.048a1.107 1.107 0 00.539-.166l.18-.1c.562-.31.916.9 1.036-1.545l.04-.225c.04-.239.184.441.357.59l.652-.508a2.25 2.25 0 011.447.886l.143-.048c.608.204 1.128.568 1.545 1.036l.1-.18a1.107 1.107 0 00.166.539l.048.143a2.25 2.25 0 01.886-1.161l.766-.51c.48-.319 1.121.226 1.49.216l.89 1.068c.257.214.405.53.405.864z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.344v.001M12 17.656v.001" />
-                    </svg>
-                    1.3.1. Fiziksel Aktivitelerin Sağlığa Etkileri
-                </h2>
-
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
-                    
-                    <div class="image-column space-y-6">
-                        <div class="topic-image-container">
-                            <img src="kosan.JPG" alt="Koşan İnsanlar">
-                        </div>
-                        <div class="topic-image-container">
-                            <img src="spor.JPG" alt="Spor Yapanlar">
-                        </div>
-                         <div class="topic-image-container">
-                            <img src="yaslar.jpg" alt="Ekstra Spor Görseli 1">
-                        </div>
-                    </div>
-                    
-                    <div class="text-column space-y-6">
-                        <p class="text-lg text-slate-700">Fiziksel aktivite, iskelet kasları kullanılarak yapılan ve enerji harcamayı gerektiren her harekettir. Egzersiz ise planlı, tekrarlı ve fiziksel uygunluğu geliştirmeyi amaçlayan aktivitelerdir.</p>
-                        
-                        <h3 class="text-2xl font-semibold text-slate-800">Aktivitenin Sağlığa Faydaları:</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-green-800">Bedensel Sağlık</h4>
-                                <ul class="list-disc list-inside text-green-700 mt-3 space-y-1.5">
-                                    <li>Kas ve kemik kütlesini korur</li>
-                                    <li>Kalbi güçlendirir</li>
-                                    <li>Kan basıncını (tansiyonu) düzenler</li>
-                                    <li>Akciğer kapasitesini artırır</li>
-                                    <li>Kilo alımını önler</li>
-                                    <li>Kemik erimesini (Osteoporoz) önler</li>
-                                </ul>
-                            </div>
-                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-blue-800">Zihinsel ve Sosyal Sağlık</h4>
-                                <ul class="list-disc list-inside text-blue-700 mt-3 space-y-1.5">
-                                    <li>İyi hissetmeyi sağlar</li>
-                                    <li>Depresyon ve kaygıyı azaltır</li>
-                                    <li>Öz güveni artırır</li>
-                                    <li>Stresle başa çıkmayı öğretir</li>
-                                    <li>Sosyal ilişkileri güçlendirir</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Metabolik Eş Değer (ME) Nedir?</h3>
-                        <p class="text-lg text-slate-700">ME, vücudun fiziksel aktivite sırasında kullandığı oksijen miktarını ölçen bir birimdir. Dinlenme durumu 1 ME olarak kabul edilir. Örneğin, 7 ME olan bir koşu (Jogging), dinlenmeye göre 7 kat daha fazla enerji harcadığınızı gösterir.</p>
-
-                        <div class="topic-image-container">
-                            <img src="spor_tablo.jpg" alt="ME Tablosu Görseli">
-                        </div>
-
-                        <h3 class="text-2xl font-semibold text-slate-800 pt-4 border-t border-gray-200">Her Yaşta Spor</h3>
-                        <p class="text-lg text-slate-700">Sporu hayat boyu sürdürmek önemlidir, ancak her yaşın ihtiyacı farklıdır:</p>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="age-sport-card">
-                                <h4>4-8 Yaş Grubu</h4>
-                                <ul><li>Jimnastik</li><li>Yüzme</li><li>Tenis</li></ul>
-                            </div>
-                            <div class="age-sport-card">
-                                <h4>8-12 Yaş Grubu</h4>
-                                <ul><li>Judo</li><li>Basketbol</li><li>Futbol</li><li>Voleybol</li></ul>
-                            </div>
-                             <div class="age-sport-card">
-                                <h4>Gençlik (12-16)</h4>
-                                <ul><li>Atletizm</li><li>Kürek</li><li>Kayak</li><li>Boks</li><li>Halter</li></ul>
-                            </div>
-                            <div class="age-sport-card">
-                                <h4>Yetişkinlik Dönemi</h4>
-                                <ul>
-                                    <li><b>20-30 Yaş:</b> Vücut geliştirme</li>
-                                    <li><b>30-40 Yaş:</b> Fitness, yüzme, koşu</li>
-                                    <li><b>İleri Yaş:</b> Doktor kontrolünde</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <h3 class="text-2xl font-semibold text-red-700 pt-4 border-t border-gray-200">Tehlikeli Takviyeler!</h3>
-                        <p class="text-lg text-slate-700">Enerji içecekleri, vitamin hapları ve protein tozu gibi takviyelerin <span class="font-bold">bilinçsiz kullanımı</span> ciddi sağlık sorunlarına yol açabilir:</p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-1">
-                            <li><span class="font-semibold">Enerji İçecekleri:</span> Yüksek kafein; kalp ritmi bozuklukları, yüksek tansiyon ve çarpıntıya neden olabilir.</li>
-                            <li><span class="font-semibold">Protein Tozu (Aşırı):</span> Böbrek ve karaciğer hastalıklarına yol açabilir.</li>
-                            <li><span class="font-semibold">Vitamin Hapları (Aşırı):</span> Böbrek yetmezliği ve karaciğer hastalıklarına sebep olabilir.</li>
-                        </ul>
-                    </div>
-                </div> </div>
-
-            <div id="beslenme" class="tab-content space-y-4">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12.041v-.15a1.875 1.875 0 00-1.254-1.739l-6.5-3.04a1.875 1.875 0 00-2.013.001l-6.5 3.04a1.875 1.875 0 00-1.254 1.74v.149m17.5 0a1.875 1.875 0 01-1.254 1.738l-6.5 3.04a1.875 1.875 0 01-2.013 0l-6.5-3.04a1.875 1.875 0 01-1.254-1.738m17.5 0v.149c0 .964-.613 1.8-1.5 2.15l-5.385 2.522a1.875 1.875 0 01-2.13 0l-5.385-2.522C3.113 14.001 2.5 13.114 2.5 12.19V12m17.5 0a1.875 1.875 0 00-1.254-1.739l-6.5-3.04a1.875 1.875 0 00-2.013.001l-6.5 3.04a1.875 1.875 0 00-1.254 1.74v.149" />
-                    </svg>
-                    1.3.2. Yeterli ve Dengeli Beslenmenin Önemi
-                </h2>
-
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
-                    
-                    <div class="image-column lg:order-last space-y-8">
-                        <div class="topic-image-container">
-                            <img src="saglikliyemek.JPG" alt="Sağlıklı Yemek">
-                        </div>
-                         <div class="topic-image-container">
-                            <img src="beslenme_extra1.jpg" alt="Beslenme Görseli 1">
-                        </div>
-                        <div class="topic-image-container">
-                            <img src="beslenme_extra2.jpg" alt="Beslenme Görseli 2">
-                        </div>
-                    </div>
-
-                    <div class="text-column space-y-6">
-                        <p class="text-lg text-slate-700">Beslenme, sadece açlığı bastırmak değil; sağlığı korumak, geliştirmek ve yaşam kalitesini yükseltmek için vücudun ihtiyacı olan besin ögelerini (protein, karbonhidrat, yağ, vitamin, mineral) yeterli miktarda ve uygun zamanda almaktır.</p>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Kahvaltının Önemi</h3>
-                        <p class="text-lg text-slate-700">Günün en önemli öğünüdür. Yaklaşık 10-12 saatlik açlıktan sonra vücudun ve beynin enerjiye ihtiyacı vardır.</p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
-                            <li>Beynin tek enerji kaynağı glikozdur. Kahvaltı, beynin ihtiyacı olan enerjiyi sağlar.</li>
-                            <li>Okul başarısını, dikkati ve problem çözme yeteneğini artırır.</li>
-                            <li>Kahvaltı yapmamak; halsizlik, baş dönmesi ve dikkat dağınıklığına yol açar.</li>
-                        </ul>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Sağlıklı Yemek Tabağı Modeli</h3>
-                        <p class="text-lg text-slate-700">Bu model, besin piramidinin daha modern ve pratik bir versiyonudur. Tabağınızı dörde böldüğünüzü hayal edin:</p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
-                            <li><span class="font-bold text-green-600">Tabağın ½'si (yarısı):</span> Sebze ve Meyveler</li>
-                            <li><span class="font-bold text-orange-600">Tabağın ¼'ü (çeyreği):</span> Tam Tahıllar (Esmer pirinç, tam buğday ekmeği vb.)</li>
-                            <li><span class="font-bold text-red-600">Tabağın ¼'ü (çeyreği):</span> Sağlıklı Proteinler (Balık, kümes hayvanları, baklagiller, yumurta)</li>
-                            <li>Ayrıca: Sağlıklı yağlar (Zeytinyağı gibi) ve bol su tüketilmelidir.</li>
-                        </ul>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Aşırı Yağ, Şeker ve Tuzun Zararları</h3>
-                        <p class="text-lg text-slate-700">Bu üç beyaz, sağlığımız için ciddi tehditlerdir:</p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
-                            <li><span class="font-semibold">Aşırı Şeker:</span> Obeziteye, diş çürüklerine ve diyabet gibi hastalıklara yakalanma riskini artırır.</li>
-                            <li><span class="font-semibold">Aşırı Tuz (Sodyum):</span> Kan basıncını (tansiyonu) artırır, kalp ve damar hastalıkları için temel risk etmenidir.</li>
-                            <li><span class="font-semibold">Aşırı Yağ (Özellikle Trans Yağ):</span> Kötü kolesterolü yükseltir, damar tıkanıklığı, felç ve kalp krizi riskini artırır.</li>
-                        </ul>
-                    </div>
-                </div> </div>
-
-            <div id="obezite" class="tab-content space-y-6">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12A2.25 2.25 0 0020.25 14.25V3M3.75 21h16.5M16.5 3.75h.008v.008H16.5V3.75z" />
-                    </svg>
-                    1.3.3. Obezite: Nedenleri ve Sağlığa Etkileri
-                </h2>
-                
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
-                    
-                    <div class="image-column space-y-8">
-                        <div class="topic-image-container">
-                            <img src="obezite.JPG" alt="Obezite Görseli">
-                        </div>
-                        <div class="topic-image-container">
-                            <img src="obezite_extra1.jpg" alt="Obezite Riskleri Görseli">
-                        </div>
-                         <div class="topic-image-container">
-                            <img src="obezite_extra2.jpg" alt="Obezite Ameliyatı Görseli">
-                        </div>
-                    </div>
-                    
-                    <div class="text-column space-y-6">
-                        <div class="concept-card">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                Kavram: Obezite Nedir?
-                            </h3>
-                            <p class="text-slate-700 mb-3">
-                                Dünya Sağlık Örgütü (DSÖ) tanımına göre obezite, <strong>"sağlığı bozacak ölçüde vücutta anormal veya aşırı yağ birikmesi"</strong> durumudur.
-                            </p>
-                            <p class="text-slate-700">
-                                En temel nedeni, <span class="font-semibold text-red-600">alınan enerjinin</span>, <span class="font-semibold text-green-600">harcanan enerjiden</span> fazla olmasıdır.
-                            </p>
-                        </div>
-
-                        <div class="concept-card bg-indigo-50 border-indigo-100">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                                İnteraktif: Kendi BKİ'nizi Hesaplayın
-                            </h3>
-                            <p class="text-slate-700 mb-4">Aşağıdaki alanlara kilonuzu ve boyunuzu girerek Beden Kitle İndeksinizi anında öğrenin.</p>
-                            
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label for="weight-input" class="block text-sm font-medium text-slate-700 mb-1">Kilo (kg)</label>
-                                    <input type="number" id="weight-input" placeholder="Örn: 70" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" min="0">
-                                </div>
-                                <div>
-                                    <label for="height-input" class="block text-sm font-medium text-slate-700 mb-1">Boy (cm)</label>
-                                    <input type="number" id="height-input" placeholder="Örn: 175" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" min="0">
-                                </div>
-                            </div>
-
-                            <div id="bmi-result-area" class="hidden p-4 bg-white rounded-lg text-center border border-slate-200 shadow-sm transition-all">
-                                <span class="block text-sm text-slate-500 font-medium uppercase tracking-wider">Hesaplanan BKİ</span>
-                                <span id="bmi-value" class="text-4xl font-extrabold text-indigo-900 my-1 block">--.-</span>
-                                <span id="bmi-status" class="block font-bold text-lg mt-2 px-3 py-1 rounded-full inline-block">---</span>
-                            </div>
-                        </div>
-                        <div class="concept-card">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
-                                Sonuç: Yol Açtığı Sağlık Sorunları
-                            </h3>
-                            <p class="text-slate-700 mb-3">Obezite, vücuttaki tüm sistemleri etkiler:</p>
-                            <ul class="list-disc list-inside text-red-600 font-medium space-y-1.5">
-                                <li>Tip 2 Diyabet ve İnsülin Direnci</li>
-                                <li>Hipertansiyon (Yüksek Tansiyon)</li>
-                                <li>Koroner Kalp Hastalığı ve İnme (Felç)</li>
-                                <li>Uyku Apnesi (Uykuda nefes durması)</li>
-                                <li>Karaciğer Yağlanması</li>
-                                <li>Eklem İltihabı (Osteoartrit)</li>
-                                <li>Ruhsal Sorunlar (Depresyon, kaygı)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="concept-card">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                Risk: Estetik Kaygılar ve Tehlikeli Çözümler
-                            </h3>
-                            <div>
-                                <h4 class="text-lg font-semibold text-red-700">Zayıflama Hapları</h4>
-                                <p class="text-slate-700">Doktor onayı olmayan, 'bitkisel' adı altında satılan ürünler; kalp ritim bozuklukları, <strong class="text-red-800">böbrek ve karaciğerde kalıcı hasarlara</strong>, hatta ölüme yol açabilir.</p>
-                            </div>
-                            <div class="mt-4">
-                                <h4 class="text-lg font-semibold text-red-700">Mide Küçültme Operasyonları</h4>
-                                <p class="text-slate-700">Bu ameliyatlar estetik bir operasyon değildir. Sadece ciddi obezite hastaları için son çare olarak uygulanır. <strong class="text-red-800">Hayati riskleri</strong> vardır.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> </div>
-
-            <div id="ruhsal" class="tab-content space-y-4">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    1.4. ZİHİNSEL, DUYGUSAL VE SOSYAL SAĞLIK
-                </h2>
-                
-                <div class="grid lg:grid-cols-2 gap-10 items-start">
-                    
-                    <div class="image-column lg:order-last space-y-8">
-                        <div class="topic-image-container">
-                            <img src="yaslar.jpg" alt="Ruh Sağlığı Görseli">
-                        </div>
-                        <div class="topic-image-container">
-                             <img src="ruhsal_extra1.jpg" alt="Stres ve Gençler">
-                        </div>
-                         <div class="topic-image-container">
-                             <img src="ruhsal_extra2.jpg" alt="Sosyalleşme Görseli">
-                        </div>
-                    </div>
-
-                    <div class="text-column space-y-6">
-                        <p class="text-lg text-slate-700">DSÖ'ye göre zihinsel sağlık; bireyin yeteneklerinin farkında olduğu, günlük yaşamdaki stresle başa çıkabildiği ve yaşadığı topluma katkıda bulunabildiği iyi olma hâlidir.</p>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Stresle Arkadaş Olmak</h3>
-                        <p class="text-lg text-slate-700">Stres, vücudun tehdit olarak algıladığı durumlara verdiği tepkidir. Her stres kötü değildir:</p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
-                            <li><span class="font-semibold text-green-600">Kısa Süreli Stres:</span> Bizi daha üretken, güçlü ve motive yapabilir. Bağışıklığı güçlendirebilir. Vücudu "savaş ya da kaç" tepkisine hazırlar.</li>
-                            <li><span class="font-semibold text-red-600">Uzun Süreli (Kronik) Stres:</span> Bağışıklık sistemini bozar ve sağlık sorunlarına yol açar.</li>
-                            <li>Önemli olan, stresi nasıl algıladığımız ve yönettiğimizdir.</li>
-                        </ul>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Ergen Bireylerde Ruh Sağlığının Önemi</h3>
-                        <p class="text-lg text-slate-700">Ergenlik; hormonal, fizyolojik ve zihinsel değişimlerin yoğun yaşandığı bir dönemdir. Bu dönemde zihinsel, duygusal ve sosyal sağlık çok önemlidir. Ergen, kimlik kazanmaya çalışırken iç ve dış çatışmalar yaşayabilir, ailesinden uzaklaşabilir. Bu süreçte uzman yardımı almak normaldir.</p>
-
-                        <h3 class="text-2xl font-semibold text-slate-800">Ruh Sağlığını Etkileyen Faktörler</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-yellow-800">Kişisel Faktörler</h4>
-                                <ul class="list-disc list-inside text-yellow-700 mt-3 space-y-1.5">
-                                    <li>Yaş</li>
-                                    <li>Cinsiyet</li>
-                                    <li>Alışkanlıklar (Uyku, spor)</li>
-                                    <li>Meslek / İşsizlik</li>
-                                    <li>Beden Sağlığı</li>
-                                </ul>
-                            </div>
-                            <div class="bg-red-50 border border-red-200 rounded-lg p-6 shadow-sm">
-                                <h4 class="font-bold text-xl text-red-800">Çevresel Faktörler</h4>
-                                <ul class="list-disc list-inside text-red-700 mt-3 space-y-1.5">
-                                    <li>Sosyoekonomik Durum</li>
-                                    <li>Doğal Afetler (Deprem, salgın)</li>
-                                    <li>Savaş, terör</li>
-                                    <li>Aile Yapısı ve İlişkileri</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> </div> </div>
-
-            <div id="quiz" class="tab-content relative">
-                <h2 class="section-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                    </svg>
-                    Konu Değerlendirme Quizi
-                </h2>
-                
-                <div id="quiz-container" class="max-w-2xl mx-auto relative pt-8">
-                     <div class="absolute top-0 left-0">
-                        <div id="timer-display">Süre: 60</div>
-                   </div>
-
-                    <div id="question-container" class="mb-5 mt-8">
-                        <p id="question-text" class="text-xl font-semibold text-slate-800 mb-5"></p>
-                        <div id="options-container" class="space-y-3">
-                            </div>
-                    </div>
-                    <button id="submit-btn" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed" onclick="submitAnswer()">Cevapla</button>
-                    <div id="result-text" class="mt-5 text-center text-xl font-semibold"></div>
+                <div>
+                    <img src="IMG_0125.jpeg" class="topic-img h-full" alt="Besin Grupları">
                 </div>
             </div>
+        </section>
 
-        </main>
-    </div>
+        <section id="tab-obese" class="tab-content hidden fade-in space-y-12">
+            <h2 class="text-4xl font-bold text-slate-900 border-l-8 border-rose-500 pl-4">1.3.3. Obezite: Nedenleri ve Etkileri</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="glass-card p-10 rounded-3xl bg-slate-900 text-white">
+                        <h3 class="text-3xl font-bold mb-6">Kendi BKİ'nizi Hesaplayın</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kilonuz (kg)</label>
+                                <input type="number" id="w" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Örn: 70">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Boyunuz (cm)</label>
+                                <input type="number" id="h" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Örn: 175">
+                            </div>
+                            <button onclick="calculateBmi()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-lg transition-all transform active:scale-95 shadow-lg">Hesapla</button>
+                            
+                            <div id="bmi-result" class="hidden animate-bounce text-center p-4 bg-indigo-900 rounded-xl border border-indigo-700">
+                                <span class="text-slate-400 block text-sm">Vücut Kitle İndeksiniz</span>
+                                <span id="bmi-val" class="text-4xl font-black block my-1">--</span>
+                                <span id="bmi-label" class="text-lg font-bold text-indigo-300 italic uppercase">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 bg-rose-50 border border-rose-100 rounded-2xl">
+                        <h4 class="font-bold text-rose-800 mb-2">Obezite Nedir?</h4>
+                        <p class="text-rose-900">Vücutta sağlığı bozacak ölçüde anormal veya aşırı yağ birikmesidir. Temel sebebi; alınan kalorinin harcanan kaloriden fazla olmasıdır.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <img src="obezite.JPG" class="topic-img" alt="Obezite Görseli">
+                    <img src="IMG_0126.jpeg" class="topic-img" alt="Obezite Tablosu">
+                    <p class="image-caption">Beden Kitle İndeksi (BKİ) Sınıflandırma Tablosu (Sayfa 58)</p>
+                </div>
+            </div>
+            
+            <div class="glass-card p-8 rounded-3xl">
+                <h3 class="text-2xl font-bold mb-6 text-red-600">Obezitenin Beraberinde Getirdiği Hastalıklar</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div class="p-4 hover:bg-slate-50 rounded-xl transition-colors">
+                        <div class="text-4xl mb-2">🫀</div>
+                        <h5 class="font-bold">Kalp Hastalığı</h5>
+                    </div>
+                    <div class="p-4 hover:bg-slate-50 rounded-xl transition-colors">
+                        <div class="text-4xl mb-2">💉</div>
+                        <h5 class="font-bold">Tip 2 Diyabet</h5>
+                    </div>
+                    <div class="p-4 hover:bg-slate-50 rounded-xl transition-colors">
+                        <div class="text-4xl mb-2">💤</div>
+                        <h5 class="font-bold">Uyku Apnesi</h5>
+                    </div>
+                    <div class="p-4 hover:bg-slate-50 rounded-xl transition-colors">
+                        <div class="text-4xl mb-2">🦵</div>
+                        <h5 class="font-bold">Eklem Sorunları</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-mental" class="tab-content hidden fade-in space-y-12">
+            <h2 class="text-4xl font-bold text-slate-900 border-l-8 border-indigo-500 pl-4">1.4. Zihinsel, Duygusal ve Sosyal Sağlık</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <p class="text-lg">Ruh sağlığı, sadece ruhsal bir hastalığın olmaması değil; bireyin kendisiyle ve çevresiyle uyum içinde olmasıdır. DSÖ'ye göre zihinsel sağlık, bireyin yeteneklerini fark ettiği, yaşamın normal stresleriyle başa çıkabildiği durumdur.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-indigo-50 rounded-2xl border-b-4 border-indigo-400">
+                            <h4 class="font-bold text-indigo-900 mb-2">Kişisel Faktörler</h4>
+                            <ul class="text-sm space-y-2 text-indigo-800">
+                                <li>• Yaş ve Cinsiyet</li>
+                                <li>• Genetik Yapı</li>
+                                <li>• Beden Sağlığı</li>
+                                <li>• Kişisel Alışkanlıklar</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border-b-4 border-slate-400">
+                            <h4 class="font-bold text-slate-900 mb-2">Çevresel Faktörler</h4>
+                            <ul class="text-sm space-y-2 text-slate-800">
+                                <li>• Aile Yapısı</li>
+                                <li>• Sosyoekonomik Durum</li>
+                                <li>• Doğal Afetler</li>
+                                <li>• Savaş ve Terör</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <img src="IMG_0127.jpeg" class="topic-img" alt="Ruh Sağlığı Şema">
+                </div>
+
+                <div class="space-y-6">
+                    <img src="IMG_0128.jpeg" class="topic-img" alt="Sosyalleşme">
+                    
+                    <div class="glass-card p-8 rounded-3xl border-l-8 border-amber-500">
+                        <h4 class="text-xl font-bold mb-4">Stres Her Zaman Kötü müdür?</h4>
+                        <p class="text-slate-600 mb-4">
+                            Hayır! Kısa süreli stres bizi daha üretken, güçlü ve motive yapabilir. Vücudun tehlike anında verdiği "Savaş ya da Kaç" tepkisi hayatta kalmamızı sağlar. Ancak <strong>kronik (uzun süreli) stres</strong>, bağışıklık sistemini zayıflatır ve vücudu hastalıklara açık hale getirir.
+                        </p>
+                        <div class="flex gap-4 italic font-medium text-amber-700">
+                            <span>#UykuDüzeni</span>
+                            <span>#SosyalDestek</span>
+                            <span>#FizikselAktivite</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-quiz" class="tab-content hidden fade-in max-w-3xl mx-auto">
+            <div class="glass-card p-12 rounded-[3rem] shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-indigo-100">
+                    <div id="quiz-progress" class="h-full bg-indigo-600 transition-all duration-500" style="width: 0%"></div>
+                </div>
+                
+                <div id="quiz-intro" class="text-center py-10">
+                    <div class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-12 h-12 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h2 class="text-4xl font-black text-slate-900 mb-4">Bilgini Test Et</h2>
+                    <p class="text-slate-500 mb-8">Sağlık Bilgisi ders kitabı temel alınarak hazırlanmış 10 soruluk değerlendirme testi.</p>
+                    <button onclick="startQuiz()" class="px-12 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 shadow-xl transition-all">Sınavı Başlat</button>
+                </div>
+
+                <div id="quiz-main" class="hidden">
+                    <div class="flex justify-between items-center mb-8">
+                        <span id="q-count" class="text-sm font-bold text-indigo-600 uppercase tracking-widest">Soru 1 / 10</span>
+                        <span id="score-display" class="px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Puan: 0</span>
+                    </div>
+                    <h3 id="q-text" class="text-2xl font-bold text-slate-800 mb-8 leading-snug">--</h3>
+                    <div id="choices" class="space-y-4">
+                        </div>
+                    <div class="mt-10 flex justify-end">
+                        <button id="next-btn" onclick="nextQuestion()" class="hidden px-8 py-3 bg-slate-900 text-white font-bold rounded-xl transition-all active:scale-95">Sıradaki Soru →</button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="hidden text-center py-10">
+                    <div id="result-emoji" class="text-7xl mb-6">🎉</div>
+                    <h3 class="text-3xl font-black mb-2" id="result-title">Harika İş Çıkardın!</h3>
+                    <p class="text-slate-500 mb-8" id="result-score">Skorun: 0 / 10</p>
+                    <button onclick="location.reload()" class="px-10 py-4 border-2 border-indigo-600 text-indigo-600 font-bold rounded-2xl hover:bg-indigo-50 transition-all">Tekrar Dene</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-500 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-12">
+            <div>
+                <h4 class="text-white font-bold mb-4">Sağlık Bilgisi Sunumu</h4>
+                <p class="text-sm leading-relaxed">Bu çalışma, lise sağlık bilgisi müfredatı temel alınarak hazırlanmış interaktif bir eğitim materyalidir. Görseller ve veriler ders kitabıyla uyumludur.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Hızlı Bağlantılar</h4>
+                <ul class="text-sm space-y-2">
+                    <li><a href="#" class="hover:text-indigo-400">Gizlilik Politikası</a></li>
+                    <li><a href="#" class="hover:text-indigo-400">Kaynaklar</a></li>
+                    <li><a href="#" class="hover:text-indigo-400">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="text-right">
+                <p class="text-sm">&copy; 2024 Sağlık Bilgisi Projesi</p>
+                <p class="text-xs mt-2 italic text-slate-600 font-serif">"Sağlık, en büyük servettir."</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // --- BKİ HESAPLAMA SCRİPTİ ---
-        const weightInput = document.getElementById('weight-input');
-        const heightInput = document.getElementById('height-input');
-        const bmiResultArea = document.getElementById('bmi-result-area');
-        const bmiValueDisplay = document.getElementById('bmi-value');
-        const bmiStatusDisplay = document.getElementById('bmi-status');
-
-        function calculateBMI() {
-            const weight = parseFloat(weightInput.value);
-            const heightCm = parseFloat(heightInput.value);
-
-            // Değerler geçersizse veya boşsa hesaplama yapma
-            if (isNaN(weight) || isNaN(heightCm) || weight <= 0 || heightCm <= 0) {
-                bmiResultArea.classList.add('hidden');
-                return;
-            }
-
-            // Boyu metreye çevir (cm / 100)
-            const heightM = heightCm / 100;
+        // TAB SWITCH LOGIC
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             
-            // BKİ Formülü: Kilo / (Boy * Boy)
-            const bmi = weight / (heightM * heightM);
-
-            // Sonucu göster (1 ondalık basamak)
-            bmiValueDisplay.textContent = bmi.toFixed(1);
-            bmiResultArea.classList.remove('hidden');
-
-            // Durumu belirle ve renk ver
-            let statusText = '';
-            let statusClass = '';
-            // Önceki renk sınıflarını temizle
-            bmiStatusDisplay.className = 'block font-bold text-lg mt-2 px-3 py-1 rounded-full inline-block';
-
-            if (bmi < 18.5) {
-                statusText = 'Zayıf';
-                statusClass = 'bg-yellow-100 text-yellow-800';
-            } else if (bmi >= 18.5 && bmi < 24.9) {
-                statusText = 'Normal Kilo';
-                statusClass = 'bg-green-100 text-green-800';
-            } else if (bmi >= 25 && bmi < 29.9) {
-                statusText = 'Fazla Kilolu';
-                statusClass = 'bg-orange-100 text-orange-800';
-            } else {
-                statusText = 'Obez';
-                statusClass = 'bg-red-100 text-red-800';
-            }
-
-            bmiStatusDisplay.textContent = statusText;
-            statusClass.split(' ').forEach(cls => bmiStatusDisplay.classList.add(cls));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Inputlara veri girildikçe hesaplamayı tetikle
-        weightInput.addEventListener('input', calculateBMI);
-        heightInput.addEventListener('input', calculateBMI);
-        // --- BKİ HESAPLAMA BİTİŞ ---
-
-
-        // Sekme (Tab) Değiştirme Fonksiyonu
-        function openTab(tabName) {
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.style.display = 'none';
-            });
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-            document.getElementById(tabName).style.display = 'block';
-            event.currentTarget.classList.add('active');
+        // BMI CALCULATION
+        function calculateBmi() {
+            const weight = parseFloat(document.getElementById('w').value);
+            const height = parseFloat(document.getElementById('h').value) / 100;
             
-            // Quiz tabına girince başlatma kontrolü
-            if (tabName === 'quiz') {
-                if(!quizFinished) {
-                    // Sadece ilk girişte veya devam ederken timer sorununu önlemek için
-                    // Quiz yüklü değilse yükle veya kullanıcıya bırak.
-                    // Mevcut yapı: loadQuiz() çağrıldığında timer başlar.
-                    if(document.getElementById('question-text').textContent === "") {
-                         loadQuiz();
-                    }
-                }
-            } else {
-                // Başka sekmeye geçince sayacı durdur
-                clearInterval(timerInterval);
+            if (weight > 0 && height > 0) {
+                const bmi = (weight / (height * height)).toFixed(1);
+                const resultDiv = document.getElementById('bmi-result');
+                const valSpan = document.getElementById('bmi-val');
+                const labelSpan = document.getElementById('bmi-label');
+                
+                resultDiv.classList.remove('hidden');
+                valSpan.textContent = bmi;
+                
+                if (bmi < 18.5) { labelSpan.textContent = "Zayıf"; labelSpan.style.color = "#fbbf24"; }
+                else if (bmi < 25) { labelSpan.textContent = "Normal"; labelSpan.style.color = "#34d399"; }
+                else if (bmi < 30) { labelSpan.textContent = "Fazla Kilolu"; labelSpan.style.color = "#fb923c"; }
+                else { labelSpan.textContent = "Obez"; labelSpan.style.color = "#f87171"; }
             }
         }
 
-        // Quiz Verisi
+        // QUIZ DATA
         const quizData = [
-            {
-                question: "Düzenli fiziksel aktivitenin kalp sağlığı üzerindeki temel etkisi nedir?",
-                options: [
-                    "Dinlenme anındaki kalp atış hızını artırır.",
-                    "Dinlenme anındaki kalp atış hızını azaltır.",
-                    "Kan basıncını (tansiyonu) yükseltir.",
-                    "Kötü kolesterolü (LDL) artırır."
-                ],
-                correct: 1
-            },
-            {
-                question: "Ders kitabına göre, beynin tek enerji kaynağı nedir ve bu nedenle hangi öğün çok önemlidir?",
-                options: [
-                    "Protein / Akşam Yemeği",
-                    "Yağ / Öğle Yemeği",
-                    "Glikoz / Kahvaltı",
-                    "Vitaminler / Ara Öğün"
-                ],
-                correct: 2
-            },
-            {
-                question: "Beden Kitle İndeksi (BKİ) nasıl hesaplanır?",
-                options: [
-                    "Boy (m) / Kilo (kg)",
-                    "Kilo (kg) x Boy (m)",
-                    "Kilo (kg) / Boyun Karesi (m²)",
-                    "Boyun Karesi (m²) / Kilo (kg)"
-                ],
-                correct: 2
-            },
-            {
-                question: "Aşağıdakilerden hangisi obezitenin yol açtığı yaygın sağlık sorunlarından biri DEĞİLDİR?",
-                options: [
-                    "Tip 2 Diyabet",
-                    "Hipertansiyon",
-                    "Uyku Apnesi",
-                    "Osteoporoz (Kemik erimesi)"
-                ],
-                correct: 3
-            },
-            {
-                question: "'Sağlıklı Yemek Tabağı' modeline göre tabağın yarısı (1/2) hangi besin grubundan oluşmalıdır?",
-                options: [
-                    "Et ve Protein Ürünleri",
-                    "Tahıllar ve Ekmek",
-                    "Süt ve Süt Ürünleri",
-                    "Sebze ve Meyveler"
-                ],
-                correct: 3
-            },
-            {
-                question: "Fiziksel aktivitenin enerji harcamasını ölçen ve dinlenme durumunu '1' kabul eden birim nedir?",
-                options: [
-                    "Beden Kitle İndeksi (BKİ)",
-                    "Metabolik Eş Değer (ME)",
-                    "Kalori (cal)",
-                    "Nabız Yüzdesi (%)"
-                ],
-                correct: 1
-            },
-            {
-                question: "Aşağıdakilerden hangisi zihinsel, duygusal ve sosyal sağlığı etkileyen 'çevresel' faktörlerden biridir?",
-                options: [
-                    "Yaş",
-                    "Alışkanlıklar (örn: uyku düzeni)",
-                    "Doğal afetler (örn: deprem, salgın)",
-                    "Cinsiyet"
-                ],
-                correct: 2
-            },
-            {
-                question: "Bilinçsiz ve aşırı protein tozu kullanımının en bilinen riski hangi organlar üzerindedir?",
-                options: [
-                    "Akciğer ve Kalp",
-                    "Böbrek ve Karaciğer",
-                    "Mide ve Bağırsak",
-                    "Beyin ve Sinir Sistemi"
-                ],
-                correct: 1
-            },
-            {
-                question: "Bir yetişkinin BKİ değeri '27 kg/m²' ise bu durum nasıl sınıflandırılır?",
-                options: [
-                    "Zayıf",
-                    "Normal",
-                    "Toplu / Hafif Şişman (Fazla Kilolu)",
-                    "Obez"
-                ],
-                correct: 2
-            },
-            {
-                question: "Ders kitabındaki metne göre stres ile ilgili aşağıdakilerden hangisi doğrudur?",
-                options: [
-                    "Stresin her türü kötüdür ve hemen tedavi edilmelidir.",
-                    "Sadece uzun süreli (kronik) stres bağışıklık sistemini bozar.",
-                    "Kısa süreli stres bağışıklığı zayıflatır.",
-                    "Stres sadece psikolojik bir sorundur, bedensel etkisi yoktur."
-                ],
-                correct: 1
-            }
+            { q: "Düzenli fiziksel aktivite dinlenme anındaki kalp atış hızını nasıl etkiler?", a: ["Artırır", "Azaltır", "Değiştirmez", "Düzensizleştirir"], c: 1 },
+            { q: "Beynin temel enerji kaynağı nedir?", a: ["Protein", "Yağ", "Glikoz", "Vitamin"], c: 2 },
+            { q: "ME (Metabolik Eş Değer) kavramında 1 ME neyi ifade eder?", a: ["Yürüyüş", "Koşu", "Dinlenme", "Uyku"], c: 2 },
+            { q: "Hangisi obezitenin yol açtığı bir hastalık değildir?", a: ["Hipertansiyon", "Diyabet", "Osteoporoz", "Uyku Apnesi"], c: 2 },
+            { q: "Kronik (uzun süreli) stresin bağışıklık sistemi üzerindeki etkisi nedir?", a: ["Güçlendirir", "Zayıflatır", "Etkilemez", "Daha hızlı çalıştırır"], c: 1 },
+            { q: "Sağlıklı yemek tabağı modeline göre tabağın yarısında ne olmalıdır?", a: ["Et Ürünleri", "Ekmek", "Süt", "Sebze ve Meyve"], c: 3 },
+            { q: "Bilinçsiz protein tozu kullanımı en çok hangi organa zarar verir?", a: ["Akciğer", "Böbrek", "Mide", "Beyin"], c: 1 },
+            { q: "BKİ değeri 28 olan bir birey hangi gruptadır?", a: ["Normal", "Fazla Kilolu", "Zayıf", "Obez"], c: 1 },
+            { q: "Hangisi ruh sağlığını etkileyen çevresel bir faktördür?", a: ["Yaş", "Genetik", "Aile Yapısı", "Cinsiyet"], c: 2 },
+            { q: "Hangisi '3 Beyaz' olarak adlandırılan tehlikelerden değildir?", a: ["Un", "Şeker", "Süt", "Tuz"], c: 2 }
         ];
 
-        let currentQuestionIndex = 0;
+        let currentIdx = 0;
         let score = 0;
-        let selectedOptionIndex = null;
-        let quizFinished = false;
+        let answered = false;
 
-        // --- TIMER DEĞİŞKENLERİ ---
-        let timeLeft = 60;
-        let timerInterval = null;
-        const timerDisplay = document.getElementById('timer-display');
-        // --------------------------
-
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const submitBtn = document.getElementById('submit-btn');
-        const resultText = document.getElementById('result-text');
-
-        function startTimer() {
-            clearInterval(timerInterval); // Önceki sayacı temizle
-            timeLeft = 60; // Süreyi sıfırla
-            timerDisplay.textContent = "Süre: " + timeLeft;
-            timerDisplay.classList.remove('blink-alert'); // Kırmızı yanıp sönmeyi kaldır
-            timerDisplay.style.color = "#4338ca"; // Normal renk
-
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                timerDisplay.textContent = "Süre: " + timeLeft;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerDisplay.textContent = "SÜRE BİTTİ!";
-                    timerDisplay.classList.add('blink-alert'); // Yanıp sönme animasyonunu ekle
-                    // Soru ekranı değişmiyor, sadece uyarı veriyor.
-                }
-            }, 1000);
+        function startQuiz() {
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-main').classList.remove('hidden');
+            renderQuestion();
         }
 
-        function loadQuiz() {
-            deselectOptions();
-            resultText.textContent = '';
-            submitBtn.textContent = 'Cevapla';
-            submitBtn.disabled = true;
-            submitBtn.onclick = submitAnswer; 
-
-            if (currentQuestionIndex < quizData.length) {
-                const currentQuestion = quizData[currentQuestionIndex];
-                questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
-                optionsContainer.innerHTML = '';
-                
-                currentQuestion.options.forEach((option, index) => {
-                    const optionElement = document.createElement('label');
-                    optionElement.className = 'quiz-option';
-                    optionElement.innerHTML = `
-                        <input type="radio" name="quiz-option" value="${index}">
-                        ${option}
-                    `;
-                    optionElement.addEventListener('click', () => selectOption(optionElement, index));
-                    optionsContainer.appendChild(optionElement);
-                });
-
-                // Her soru yüklendiğinde sayacı başlat
-                startTimer();
-
-            } else {
-                // Quiz bitti
-                quizFinished = true;
-                clearInterval(timerInterval); // Sayacı durdur
-                timerDisplay.style.display = 'none'; // Sayacı gizle
-                questionText.textContent = 'Quiz Tamamlandı!';
-                optionsContainer.innerHTML = `<p class="text-center text-2xl font-bold text-indigo-600">Toplam ${quizData.length} sorudan ${score} tanesini doğru bildiniz!</p>`;
-                submitBtn.textContent = 'Tekrar Başla';
-                submitBtn.disabled = false;
-                submitBtn.onclick = restartQuiz;
-                resultText.textContent = '';
-            }
-        }
-
-        function restartQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            quizFinished = false;
-            timerDisplay.style.display = 'inline-block'; // Sayacı geri getir
-            loadQuiz();
-        }
-
-        function selectOption(optionElement, index) {
-            if (submitBtn.textContent !== 'Cevapla') {
-                return;
-            }
+        function renderQuestion() {
+            answered = false;
+            document.getElementById('next-btn').classList.add('hidden');
+            const data = quizData[currentIdx];
+            document.getElementById('q-count').textContent = `Soru ${currentIdx + 1} / ${quizData.length}`;
+            document.getElementById('q-text').textContent = data.q;
             
-            deselectOptions();
-            optionElement.classList.add('selected');
-            optionElement.querySelector('input').checked = true;
-            selectedOptionIndex = index;
-            submitBtn.disabled = false;
-        }
-
-        function deselectOptions() {
-            const options = document.querySelectorAll('.quiz-option');
-            options.forEach(option => {
-                option.classList.remove('selected', 'correct', 'incorrect');
-            });
-            selectedOptionIndex = null;
-        }
-
-        function submitAnswer() {
-            // Cevap verildiğinde sayacı durdur (süre bittiyse zaten durmuştur)
-            clearInterval(timerInterval);
-
-            const currentQuestion = quizData[currentQuestionIndex];
-            const options = document.querySelectorAll('.quiz-option');
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
             
-            if (selectedOptionIndex === null) return; 
-
-            // Cevapları göster
-            options.forEach((option, index) => {
-                if (index === currentQuestion.correct) {
-                    option.classList.add('correct');
-                } else if (index === selectedOptionIndex) {
-                    option.classList.add('incorrect');
-                }
+            data.a.forEach((choice, i) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-choice w-full text-left p-5 rounded-2xl font-semibold flex justify-between items-center";
+                btn.innerHTML = `<span>${choice}</span> <span class="indicator hidden"></span>`;
+                btn.onclick = () => selectChoice(i, btn);
+                choicesDiv.appendChild(btn);
             });
 
-            // Skoru güncelle
-            if (selectedOptionIndex === currentQuestion.correct) {
+            const progress = ((currentIdx) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = progress + "%";
+        }
+
+        function selectChoice(index, btn) {
+            if (answered) return;
+            answered = true;
+            const correctIdx = quizData[currentIdx].c;
+            const allBtns = document.querySelectorAll('.quiz-choice');
+            
+            if (index === correctIdx) {
                 score++;
-                resultText.textContent = 'Doğru!';
-                resultText.style.color = '#16a34a'; // green-600
+                btn.classList.add('correct');
+                btn.querySelector('.indicator').innerHTML = '✅';
             } else {
-                resultText.textContent = `Yanlış! Doğru cevap: ${currentQuestion.options[currentQuestion.correct]}`;
-                resultText.style.color = '#dc2626'; // red-600
+                btn.classList.add('wrong');
+                btn.querySelector('.indicator').innerHTML = '❌';
+                allBtns[correctIdx].classList.add('correct');
+                allBtns[correctIdx].querySelector('.indicator').innerHTML = '✅';
             }
-
-            // Butonu "Sonraki Soru" olarak değiştir
-            currentQuestionIndex++;
-            submitBtn.textContent = (currentQuestionIndex === quizData.length) ? 'Sonuçları Gör' : 'Sonraki Soru';
-            submitBtn.disabled = false;
             
-            submitBtn.onclick = loadQuiz; 
+            allBtns.forEach(b => b.querySelector('.indicator').classList.remove('hidden'));
+            document.getElementById('score-display').textContent = `Puan: ${score * 10}`;
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-progress').style.width = "100%";
+            document.getElementById('quiz-main').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('result-score').textContent = `Skorun: ${score} / ${quizData.length}`;
+            
+            const emoji = document.getElementById('result-emoji');
+            const title = document.getElementById('result-title');
+            
+            if (score > 7) { emoji.textContent = "🎉"; title.textContent = "Harikasın!"; }
+            else if (score > 4) { emoji.textContent = "👍"; title.textContent = "İyi Gidiyorsun!"; }
+            else { emoji.textContent = "📖"; title.textContent = "Biraz Daha Çalışmalısın"; }
         }
     </script>
 </body>
