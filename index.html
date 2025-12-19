@@ -8,19 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* Profesyonel ve "Eğitim" Odaklı CSS İyileştirmeleri */
-        
+        /* --- Temel Ayarlar --- */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* bg-slate-50 (Temiz bir arka plan) */
-            color: #334155; /* text-slate-700 */
+            background-color: #f8fafc;
+            color: #334155;
         }
 
-        /* Sekme İçeriği ve Animasyon */
+        /* --- Animasyonlar --- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Yanıp Sönme Animasyonu (Süre Bitti İçin) */
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        .blink-alert {
+            color: #dc2626 !important; /* Kırmızı ve zorunlu */
+            font-weight: 800;
+            animation: blinker 1s linear infinite;
+        }
+
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease-out;
@@ -29,65 +39,62 @@
             display: block;
         }
 
-        /* Sekme Stilleri (Daha rafine) */
+        /* --- Navigasyon Butonları --- */
         .tab-button {
             padding: 0.65rem 1.25rem;
             font-weight: 600;
-            color: #475569; /* text-slate-600 */
+            color: #475569;
             border-radius: 0.5rem;
             margin: 0.25rem 0.5rem;
             border: 2px solid transparent;
             transition: all 0.3s ease;
         }
         .tab-button:hover {
-            color: #4f46e5; /* text-indigo-600 */
-            background-color: #eef2ff; /* indigo-50 */
+            color: #4f46e5;
+            background-color: #eef2ff;
         }
         .tab-button.active {
             color: #ffffff;
-            background-color: #4f46e5; /* bg-indigo-600 */
+            background-color: #4f46e5;
             border-color: #4f46e5;
             box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
         }
 
-        /* Bölüm Başlığı (Akademik) */
+        /* --- Başlıklar ve Kartlar --- */
         .section-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 800; /* font-extrabold */
-            color: #1e3a8a; /* text-blue-900 (Daha tok bir renk) */
-            border-bottom: 2px solid #dbeafe; /* border-blue-100 */
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            border-bottom: 2px solid #dbeafe;
             padding-bottom: 0.75rem;
             margin-bottom: 1.5rem;
         }
         .section-header svg {
             width: 2rem;
             height: 2rem;
-            color: #3b82f6; /* text-blue-500 */
+            color: #3b82f6;
         }
 
-        /* Ana Konsept Kartları (Daha profesyonel gölge) */
         .concept-card {
             background-color: #ffffff;
-            border: 1px solid #e5e7eb; /* border-gray-200 */
-            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
             padding: 1.5rem;
-            /* shadow-lg */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07);
             height: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .concept-card:hover {
             transform: translateY(-4px);
-            /* shadow-xl */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
         }
         .concept-card h3 {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #4338ca; /* text-indigo-700 */
+            color: #4338ca;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -95,122 +102,124 @@
             padding-bottom: 0.75rem;
             margin-bottom: 1rem;
         }
-        .concept-card h3 svg {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
         
-        /* "Her Yaşta Spor" Eğitim Kartları */
+        /* --- Yaş Grupları Kartları --- */
         .age-sport-card {
             background-color: #fdfdfd;
-            border: 1px solid #e5e7eb; /* border-gray-200 */
-            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
             padding: 1rem 1.25rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: all 0.2s ease-out;
+            margin-bottom: 1rem;
         }
         .age-sport-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
         .age-sport-card h4 {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 700; /* font-bold */
-            color: #4f46e5; /* text-indigo-600 */
-            border-bottom: 1px solid #ddd6fe; /* border-indigo-200 */
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #4f46e5;
+            border-bottom: 1px solid #ddd6fe;
             padding-bottom: 0.5rem;
             margin-bottom: 0.75rem;
         }
         .age-sport-card ul {
             list-style-type: disc;
             list-style-position: inside;
-            color: #374151; /* text-gray-700 */
+            color: #374151;
             font-size: 0.95rem;
             space-y: 0.5rem;
         }
 
-        /* GÜNCELLENDİ: Fotoğraf Alanları (Resimlerin düzgün görünmesi için) */
+        /* --- Görsel Alanları --- */
         .topic-image-container {
             width: 100%;
-            aspect-ratio: 16 / 9; /* Daha modern bir görünüm için 16:9 */
+            aspect-ratio: 16 / 9;
             background-color: #e5e7eb; 
             border-radius: 0.75rem; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
             border: 1px solid #d1d5db;
-            overflow: hidden; /* Köşelerin yuvarlak kalması için */
-            display: flex; /* İçerik yoksa placeholder'ı ortalamak için */
+            overflow: hidden;
+            display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .topic-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Resmin kutuyu doldurmasını ve yamulmamasını sağlar */
+            object-fit: cover;
             display: block;
         }
         
-        /* Placeholder style if image is missing */
+        /* Görsel yoksa placeholder metni */
         .topic-image-container span:empty::before {
             content: 'Görsel Alanı';
             color: #9ca3af;
             font-style: italic;
         }
 
-
-        /* Quiz Stilleri */
+        /* --- Quiz Stilleri --- */
         .quiz-option {
             display: block;
             padding: 0.85rem 1.25rem;
-            border: 1px solid #e5e7eb; /* border-gray-200 */
+            border: 1px solid #e5e7eb;
             background-color: #ffffff;
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
             margin-bottom: 0.75rem;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             font-weight: 500;
         }
         .quiz-option:hover {
-            background-color: #f9fafb; /* bg-gray-50 */
-            border-color: #a5b4fc; /* border-indigo-300 */
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+            background-color: #f9fafb;
+            border-color: #a5b4fc;
         }
         .quiz-option input {
             display: none;
         }
         .quiz-option.selected {
-            background-color: #eef2ff; /* bg-indigo-50 */
-            border-color: #4f46e5; /* border-indigo-600 */
-            color: #3730a3; /* text-indigo-800 */
+            background-color: #eef2ff;
+            border-color: #4f46e5;
+            color: #3730a3;
             font-weight: 600;
             border-width: 2px;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
         }
         .quiz-option.correct {
-            background-color: #dcfce7; /* bg-green-100 */
-            border-color: #22c55e; /* border-green-500 */
-            color: #15803d; /* text-green-700 */
-            font-weight: 600;
-            border-width: 2px;
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
         }
         .quiz-option.incorrect {
-            background-color: #fee2e2; /* bg-red-100 */
-            border-color: #ef4444; /* border-red-500 */
-            color: #b91c1c; /* text-red-700 */
-            font-weight: 600;
-            border-width: 2px;
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #b91c1c;
         }
-        /* Chrome, Safari, Edge, Opera için input oklarını kaldırma */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+        
+        /* Timer Stili */
+        #timer-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4338ca;
+            background-color: #e0e7ff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 2px solid #c7d2fe;
+            min-width: 140px;
+            text-align: center;
         }
 
-        /* Firefox için input oklarını kaldırma */
-        input[type=number] {
-        -moz-appearance: textfield;
-        }
+        /* Input Oklarını Kaldırma */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
     </style>
 </head>
 <body class="bg-slate-50 p-4 md:p-8">
@@ -240,14 +249,19 @@
                     Proje Konusuna Giriş
                 </h2>
                 
-                <div class="topic-image-container w-full max-w-3xl mx-auto mb-8">
-                    <img src="foto1.jpg" alt="Giriş Görseli">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="topic-image-container">
+                        <img src="foto1.jpg" alt="Giriş Görseli 1">
+                    </div>
+                    <div class="topic-image-container">
+                        <img src="foto2.jpg" alt="Giriş Görseli 2">
+                    </div>
                 </div>
 
                 <p class="text-lg text-slate-700">Hoş geldiniz! Bu sunum, Sağlık Bilgisi ders kitabı 47-63. sayfalar arasındaki konuları kapsamaktadır. Amacımız, sağlıklı bir yaşam için temel taşlar olan 'Beslenme ve Fiziksel Aktivite' ile 'Zihinsel, Duygusal ve Sosyal Sağlık' konularını incelemektir.</p>
                 <p class="text-lg text-slate-700">Bu bölümde, bu iki ana konunun birbiriyle nasıl ilişkili olduğunu ve genel sağlığımızı nasıl etkilediğini keşfedeceğiz. Yukarıdaki sekmeleri kullanarak konular arasında gezinebilirsiniz.</p>
                 
-                <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-5">
+                <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-5 mt-6">
                     <h3 class="font-bold text-blue-800 text-xl">Sunum Akışı:</h3>
                     <ul class="list-disc list-inside text-blue-700 mt-2 space-y-2 text-lg">
                         <li><b>Fiziksel Aktivite:</b> Sağlığa etkileri, ME kavramı, yaşa göre sporlar ve tehlikeli takviyeler.</li>
@@ -270,12 +284,15 @@
 
                 <div class="grid lg:grid-cols-2 gap-10 items-start">
                     
-                    <div class="image-column space-y-8">
+                    <div class="image-column space-y-6">
                         <div class="topic-image-container">
                             <img src="kosan.JPG" alt="Koşan İnsanlar">
                         </div>
                         <div class="topic-image-container">
                             <img src="spor.JPG" alt="Spor Yapanlar">
+                        </div>
+                         <div class="topic-image-container">
+                            <img src="spor_ekstra1.jpg" alt="Ekstra Spor Görseli 1">
                         </div>
                     </div>
                     
@@ -309,6 +326,10 @@
 
                         <h3 class="text-2xl font-semibold text-slate-800">Metabolik Eş Değer (ME) Nedir?</h3>
                         <p class="text-lg text-slate-700">ME, vücudun fiziksel aktivite sırasında kullandığı oksijen miktarını ölçen bir birimdir. Dinlenme durumu 1 ME olarak kabul edilir. Örneğin, 7 ME olan bir koşu (Jogging), dinlenmeye göre 7 kat daha fazla enerji harcadığınızı gösterir.</p>
+
+                        <div class="topic-image-container">
+                            <img src="spor_tablo.jpg" alt="ME Tablosu Görseli">
+                        </div>
 
                         <h3 class="text-2xl font-semibold text-slate-800 pt-4 border-t border-gray-200">Her Yaşta Spor</h3>
                         <p class="text-lg text-slate-700">Sporu hayat boyu sürdürmek önemlidir, ancak her yaşın ihtiyacı farklıdır:</p>
@@ -360,7 +381,10 @@
                             <img src="saglikliyemek.JPG" alt="Sağlıklı Yemek">
                         </div>
                          <div class="topic-image-container">
-                            <span></span>
+                            <img src="beslenme_extra1.jpg" alt="Beslenme Görseli 1">
+                        </div>
+                        <div class="topic-image-container">
+                            <img src="beslenme_extra2.jpg" alt="Beslenme Görseli 2">
                         </div>
                     </div>
 
@@ -409,7 +433,10 @@
                             <img src="obezite.JPG" alt="Obezite Görseli">
                         </div>
                         <div class="topic-image-container">
-                            <span></span>
+                            <img src="obezite_extra1.jpg" alt="Obezite Riskleri Görseli">
+                        </div>
+                         <div class="topic-image-container">
+                            <img src="obezite_extra2.jpg" alt="Obezite Ameliyatı Görseli">
                         </div>
                     </div>
                     
@@ -500,7 +527,10 @@
                             <img src="yaslar.jpg" alt="Ruh Sağlığı Görseli">
                         </div>
                         <div class="topic-image-container">
-                             <span></span>
+                             <img src="ruhsal_extra1.jpg" alt="Stres ve Gençler">
+                        </div>
+                         <div class="topic-image-container">
+                             <img src="ruhsal_extra2.jpg" alt="Sosyalleşme Görseli">
                         </div>
                     </div>
 
@@ -542,15 +572,20 @@
                         </div>
                     </div> </div> </div>
 
-            <div id="quiz" class="tab-content">
+            <div id="quiz" class="tab-content relative">
                 <h2 class="section-header">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                     </svg>
                     Konu Değerlendirme Quizi
                 </h2>
-                <div id="quiz-container" class="max-w-2xl mx-auto">
-                    <div id="question-container" class="mb-5">
+                
+                <div id="quiz-container" class="max-w-2xl mx-auto relative pt-8">
+                     <div class="absolute top-0 left-0">
+                        <div id="timer-display">Süre: 60</div>
+                   </div>
+
+                    <div id="question-container" class="mb-5 mt-8">
                         <p id="question-text" class="text-xl font-semibold text-slate-800 mb-5"></p>
                         <div id="options-container" class="space-y-3">
                             </div>
@@ -595,7 +630,7 @@
             let statusText = '';
             let statusClass = '';
             // Önceki renk sınıflarını temizle
-            bmiStatusDisplay.classList.remove('bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800', 'bg-orange-100', 'text-orange-800', 'bg-red-100', 'text-red-800');
+            bmiStatusDisplay.className = 'block font-bold text-lg mt-2 px-3 py-1 rounded-full inline-block';
 
             if (bmi < 18.5) {
                 statusText = 'Zayıf';
@@ -612,7 +647,6 @@
             }
 
             bmiStatusDisplay.textContent = statusText;
-            // Yeni renk sınıfını ekle (tailwind utility classları string olarak birleştiriliyor)
             statusClass.split(' ').forEach(cls => bmiStatusDisplay.classList.add(cls));
         }
 
@@ -634,12 +668,24 @@
             });
             document.getElementById(tabName).style.display = 'block';
             event.currentTarget.classList.add('active');
-            if (tabName === 'quiz' && !quizFinished) {
-                loadQuiz();
+            
+            // Quiz tabına girince başlatma kontrolü
+            if (tabName === 'quiz') {
+                if(!quizFinished) {
+                    // Sadece ilk girişte veya devam ederken timer sorununu önlemek için
+                    // Quiz yüklü değilse yükle veya kullanıcıya bırak.
+                    // Mevcut yapı: loadQuiz() çağrıldığında timer başlar.
+                    if(document.getElementById('question-text').textContent === "") {
+                         loadQuiz();
+                    }
+                }
+            } else {
+                // Başka sekmeye geçince sayacı durdur
+                clearInterval(timerInterval);
             }
         }
 
-        // Quiz Verisi (TEMİZLENDİ)
+        // Quiz Verisi
         const quizData = [
             {
                 question: "Düzenli fiziksel aktivitenin kalp sağlığı üzerindeki temel etkisi nedir?",
@@ -747,17 +793,39 @@
         let score = 0;
         let selectedOptionIndex = null;
         let quizFinished = false;
-        let quizLoaded = false; 
+
+        // --- TIMER DEĞİŞKENLERİ ---
+        let timeLeft = 60;
+        let timerInterval = null;
+        const timerDisplay = document.getElementById('timer-display');
+        // --------------------------
 
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
         const submitBtn = document.getElementById('submit-btn');
         const resultText = document.getElementById('result-text');
 
-        function loadQuiz() {
-            if (quizLoaded && currentQuestionIndex === 0 && !quizFinished) return; 
-            quizLoaded = true;
+        function startTimer() {
+            clearInterval(timerInterval); // Önceki sayacı temizle
+            timeLeft = 60; // Süreyi sıfırla
+            timerDisplay.textContent = "Süre: " + timeLeft;
+            timerDisplay.classList.remove('blink-alert'); // Kırmızı yanıp sönmeyi kaldır
+            timerDisplay.style.color = "#4338ca"; // Normal renk
 
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = "Süre: " + timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "SÜRE BİTTİ!";
+                    timerDisplay.classList.add('blink-alert'); // Yanıp sönme animasyonunu ekle
+                    // Soru ekranı değişmiyor, sadece uyarı veriyor.
+                }
+            }, 1000);
+        }
+
+        function loadQuiz() {
             deselectOptions();
             resultText.textContent = '';
             submitBtn.textContent = 'Cevapla';
@@ -779,9 +847,15 @@
                     optionElement.addEventListener('click', () => selectOption(optionElement, index));
                     optionsContainer.appendChild(optionElement);
                 });
+
+                // Her soru yüklendiğinde sayacı başlat
+                startTimer();
+
             } else {
                 // Quiz bitti
                 quizFinished = true;
+                clearInterval(timerInterval); // Sayacı durdur
+                timerDisplay.style.display = 'none'; // Sayacı gizle
                 questionText.textContent = 'Quiz Tamamlandı!';
                 optionsContainer.innerHTML = `<p class="text-center text-2xl font-bold text-indigo-600">Toplam ${quizData.length} sorudan ${score} tanesini doğru bildiniz!</p>`;
                 submitBtn.textContent = 'Tekrar Başla';
@@ -795,7 +869,7 @@
             currentQuestionIndex = 0;
             score = 0;
             quizFinished = false;
-            quizLoaded = false; 
+            timerDisplay.style.display = 'inline-block'; // Sayacı geri getir
             loadQuiz();
         }
 
@@ -820,6 +894,9 @@
         }
 
         function submitAnswer() {
+            // Cevap verildiğinde sayacı durdur (süre bittiyse zaten durmuştur)
+            clearInterval(timerInterval);
+
             const currentQuestion = quizData[currentQuestionIndex];
             const options = document.querySelectorAll('.quiz-option');
             
@@ -851,16 +928,6 @@
             
             submitBtn.onclick = loadQuiz; 
         }
-
-        // Quiz sekmesi dışındaki bir sekme varsayılan olarak açıkken (anasayfa)
-        // Quiz'in hemen yüklenmemesi için bu kontrol
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('anasayfa').style.display === 'block') {
-                // Quiz'i yükleme, sadece 'quiz' sekmesine tıklandığında yüklenecek.
-            } else if (document.getElementById('quiz').style.display === 'block') {
-                loadQuiz();
-            }
-        });
     </script>
 </body>
 </html>
